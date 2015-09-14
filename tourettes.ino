@@ -12,6 +12,8 @@
  any redistribution
 *********************************************************************/
 
+int READY_PIN = 4;
+
 /***************************
  * Bluefruit configuration *
  ***************************/
@@ -49,6 +51,9 @@ Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_
 /**************************************************************************/
 void setup(void)
 {
+  pinMode(READY_PIN, OUTPUT);
+  digitalWrite(READY_PIN, LOW);
+  
   while (!Serial);  // required for Flora & Micro
   delay(500);
 

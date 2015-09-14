@@ -35,10 +35,11 @@ void bluefruit_setup() {
   ble.info();
 
   Serial.println(F("Please use Adafruit Bluefruit LE app to connect in UART mode"));
-  Serial.println(F("Then Enter characters to send to Bluefruit"));
   Serial.println();
 
   ble.verbose(false);  // debug info is a little annoying after this point!
+
+  digitalWrite(READY_PIN, HIGH);
 
   /* Wait for connection */
   while (! ble.isConnected()) {
@@ -99,12 +100,37 @@ void bluefruit_loop() {
   */
 
   int x = analogRead(1);
+
   Serial.print("[Send] ");Serial.println(x);
-  ble.print("AT+BLEUARTTX=");ble.print(x);ble.println(" ");
+  ble.print("AT+BLEUARTTX=");ble.print(x);ble.println("x");
+  delay(50);
+  if (! ble.waitForOK() ) {
+     Serial.println(F("Failed to send x?"));
+  }
+  
+  int y = analogRead(2);
+  Serial.print("[Send] ");Serial.println(y);
+  ble.print("AT+BLEUARTTX=");ble.print(y);ble.println("y");
+  delay(50);
+  if (! ble.waitForOK() ) {
+     Serial.println(F("Failed to send y?"));
+  }
+
+  int z = analogRead(3);
+  Serial.print("[Send] ");Serial.println(z);
+  ble.print("AT+BLEUARTTX=");ble.print(z);ble.println("z");
+  delay(50);
+  if (! ble.waitForOK() ) {
+     Serial.println(F("Failed to send z?"));
+  }
+
+  Serial.print("[Send] ");Serial.println(z);
+  ble.print("AT+BLEUARTTX=");ble.println("----");
   delay(50);
   if (! ble.waitForOK() ) {
      Serial.println(F("Failed to send?"));
   }
+
 
   /*
   int y = analogRead(2);
